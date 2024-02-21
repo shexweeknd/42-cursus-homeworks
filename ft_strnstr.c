@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiny <tiny@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 18:06:10 by tiny              #+#    #+#             */
-/*   Updated: 2024/02/20 18:52:36 by tiny             ###   ########.fr       */
+/*   Created: 2024/02/21 16:54:27 by tiny              #+#    #+#             */
+/*   Updated: 2024/02/21 18:12:34 by tiny             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void *ft_memchr(const void *str, int c, int b_size)
-{
-    char *ret;
+#include <stdio.h>
 
-    ret = 0;
-    while(b_size--)
+char    *ft_strnstr(void *str, void *to_find, int n)
+{
+    int i;
+
+    i = 0;
+    while (n--)
     {
-        if (*(unsigned char *)str == c)
+        if (*(unsigned char *)str && *(unsigned char *)str++ == *(unsigned char *)(to_find + i))
         {
-            ret = (char *)str++;
-            break;
+            if (*(unsigned char *)(to_find + (i + 1)) == '\0')
+                return ((char *)(--str - i));
+            i++;
         }
-        else
-            str++;
     }
-    return (ret);
+    return (NULL);
 }
 
-#include <string.h>
 #include <stdio.h>
 
 int main(void)
 {
-    char *s = "bonjour je fais parti de l'elite";
     char *ret;
-    char c = 'e';
-    int n = 9;
-
-    ret = memchr(s, c, n);
-    printf("%s\n", ret);    
+    char *str = "qwerty";
+    char *to_find = "erty";
+    
+    ret = ft_strnstr(str, to_find, 6); //expected NULL
+    printf("%s\n", ret);
     return (0);
 }
